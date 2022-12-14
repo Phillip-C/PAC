@@ -1,0 +1,51 @@
+{
+    "app_name": "Operations Control Panel",
+    "version": "v0.0.1",
+    "copyright": "v0.0.1",
+    "year": 2022,
+    "theme_name": "default",
+    "custom_title_bar": true,
+    "ssh_connections": [
+        {
+            "name": "it workz",
+            "host": "127.0.0.1",
+            "username": "pac",
+            "password": "pac",
+            "key": ""
+        },
+        {
+            "name": "Nessus",
+            "host": "127.0.0.4",
+            "username": "nessus",
+            "password": "pac",
+            "key": ""
+        }
+    ],
+    "startup_size": [
+        1400,
+        720
+    ],
+    "minimum_size": [
+        960,
+        540
+    ],
+    "lef_menu_size": {
+        "minimum": 50,
+        "maximum": 240
+    },
+    "left_menu_content_margins": 3,
+    "left_column_size": {
+        "minimum": 0,
+        "maximum": 240
+    },
+    "right_column_size": {
+        "minimum": 0,
+        "maximum": 240
+    },
+    "time_animation": 500,
+    "font": {
+        "family": "Segoe UI",
+        "title_size": 10,
+        "text_size": 9
+    }
+}
