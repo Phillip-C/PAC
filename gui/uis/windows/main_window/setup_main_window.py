@@ -420,8 +420,42 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
             self.ui.load_pages.tblConnections.setItem(row_number, 2, QTableWidgetItem(str(con["username"]))) # Add pass
             self.ui.load_pages.tblConnections.setItem(row_number, 3, QTableWidgetItem(str(con["key"]))) # Add key
             self.ui.load_pages.tblConnections.setRowHeight(row_number, 22)
-        self.ui.load_pages.tblConnections.itemClicked.connect(self.SSHitemClick_evt)
+        #self.ui.load_pages.tblConnections.itemClicked.connect(self.SSHitemClick_evt)
         self.ui.load_pages.tblConnections.itemSelectionChanged.connect(self.tblConnections_SelectionChanged)
+        self.ui.load_pages.tblConnections.itemChanged.connect(self.tblConnections_itemChanged)
+
+        ###
+        ### Tools table
+        ###
+        self.ui.load_pages.tblTools.setStyleSheet(style_format)
+        self.ui.load_pages.tblTools.setColumnCount(4)
+        self.ui.load_pages.tblTools.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui.load_pages.tblTools.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.ui.load_pages.tblTools.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.clumn_1 = QTableWidgetItem()
+        self.clumn_1.setTextAlignment(Qt.AlignCenter)
+        self.clumn_1.setText("Type")
+        self.clumn_2 = QTableWidgetItem()
+        self.clumn_2.setTextAlignment(Qt.AlignCenter)
+        self.clumn_2.setText("Tool")
+        self.clumn_3 = QTableWidgetItem()
+        self.clumn_3.setTextAlignment(Qt.AlignCenter)
+        self.clumn_3.setText("Details")
+        self.clumn_4 = QTableWidgetItem()
+        self.clumn_4.setTextAlignment(Qt.AlignCenter)
+        self.clumn_4.setText("Status")
+        self.ui.load_pages.tblTools.setHorizontalHeaderItem(0, self.clumn_1)
+        self.ui.load_pages.tblTools.setHorizontalHeaderItem(1, self.clumn_2)
+        self.ui.load_pages.tblTools.setHorizontalHeaderItem(2, self.clumn_3)
+        self.ui.load_pages.tblTools.setHorizontalHeaderItem(3, self.clumn_4)
+        for con in self.settings["ssh_connections"]:
+            row_number = self.ui.load_pages.tblTools.rowCount()
+            self.ui.load_pages.tblTools.insertRow(row_number) # Insert row
+            self.ui.load_pages.tblTools.setItem(row_number, 0, QTableWidgetItem(str(con["name"]))) # Add name
+            self.ui.load_pages.tblTools.setItem(row_number, 1, QTableWidgetItem(str(con["host"]))) # Add nick
+            self.ui.load_pages.tblTools.setItem(row_number, 2, QTableWidgetItem(str(con["username"]))) # Add pass
+            self.ui.load_pages.tblTools.setItem(row_number, 3, QTableWidgetItem(str(con["key"]))) # Add key
+            self.ui.load_pages.tblTools.setRowHeight(row_number, 22)
 
         style = '''
         QLineEdit {{
@@ -451,7 +485,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{
 
         self.ui.tbadd.clicked.connect(self.btnAddConnection_Click)
         self.ui.tbdel.clicked.connect(self.btnDeleteSSH_Click)
-
+        
     # RESIZE GRIPS AND CHANGE POSITION
     # Resize or change position when window is resized
     def resize_grips(self):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dlgSSHConnectionDTWVzS.ui'
+## Form generated from reading UI file 'dlgSSHConnectionkzkKmf.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.4.1
 ##
@@ -79,22 +79,12 @@ class Ui_dlgSSHConnection(QDialog):
 
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.txtSSHPassword)
 
-        self.label_5 = QLabel(self.layoutWidget)
-        self.label_5.setObjectName(u"label_5")
-        self.label_5.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.formLayout.setWidget(4, QFormLayout.LabelRole, self.label_5)
-
         self.btnSSHPrivateKey = QPushButton(self.layoutWidget)
         self.btnSSHPrivateKey.setObjectName(u"btnSSHPrivateKey")
 
-        self.formLayout.setWidget(4, QFormLayout.FieldRole, self.btnSSHPrivateKey)
+        self.formLayout.setWidget(4, QFormLayout.SpanningRole, self.btnSSHPrivateKey)
 
-        self.txtPrivateKey = QLabel(dlgSSHConnection)
-        self.txtPrivateKey.setObjectName(u"txtPrivateKey")
-        self.txtPrivateKey.setGeometry(QRect(10, 150, 49, 16))
-        self.txtPrivateKey.setStyleSheet(u"visibility: hidden")
-        self.txtPrivateKey.setTextFormat(Qt.PlainText)
+
         self.retranslateUi(dlgSSHConnection)
         self.buttonBox.accepted.connect(dlgSSHConnection.accept)
         self.buttonBox.rejected.connect(dlgSSHConnection.reject)
@@ -108,8 +98,6 @@ class Ui_dlgSSHConnection(QDialog):
         self.label_2.setText(QCoreApplication.translate("dlgSSHConnection", u"Host/IP", None))
         self.label_3.setText(QCoreApplication.translate("dlgSSHConnection", u"Username", None))
         self.label_4.setText(QCoreApplication.translate("dlgSSHConnection", u"Password", None))
-        self.label_5.setText(QCoreApplication.translate("dlgSSHConnection", u"Private Key", None))
         self.btnSSHPrivateKey.setText(QCoreApplication.translate("dlgSSHConnection", u"Select Private Key", None))
-        self.txtPrivateKey.setText("")
     # retranslateUi
 

@@ -7,18 +7,11 @@
     "custom_title_bar": true,
     "ssh_connections": [
         {
-            "name": "it workz",
-            "host": "127.0.0.1",
+            "name": "local",
+            "host": "172.22.147.230",
             "username": "pac",
             "password": "pac",
-            "key": ""
-        },
-        {
-            "name": "Nessus",
-            "host": "127.0.0.4",
-            "username": "nessus",
-            "password": "pac",
-            "key": ""
+            "key": "Select Private Key"
         }
     ],
     "startup_size": [

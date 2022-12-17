@@ -292,6 +292,7 @@ class UI_MainWindow(object):
         self.btnConnect = QPushButton()
         self.btnConnect.setMaximumWidth(24)
         self.btnConnect.setIcon(QIcon(Functions.set_png_icon("plug_new.png")))
+        self.btnConnect.setCheckable(True)
         self.btnConnect.setStyleSheet(f"background: {self.themes['app_color']['dark_one']}")
         self.credits_layout.addWidget(self.btnConnect)
         self.btnDisconnect = QPushButton()
@@ -299,3 +300,5 @@ class UI_MainWindow(object):
         self.btnDisconnect.setIcon(QIcon(Functions.set_png_icon("plug_delete.png")))
         self.btnDisconnect.setStyleSheet(f"background: {self.themes['app_color']['dark_one']}")
         self.credits_layout.addWidget(self.btnDisconnect)
+        self.btnConnect.clicked.connect(self.btnConnect_Click)
+        self.btnDisconnect.clicked.connect(self.btnDisconnect_Click)

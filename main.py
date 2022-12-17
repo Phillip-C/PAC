@@ -7,6 +7,7 @@ from gui.uis.windows.main_window import *
 from gui.widgets import *
 from gui.uis.dialogs import ui_dlgSSHConnection
 import ntpath # support filepaths on all os
+from classes import *
 os.environ["QT_FONT_DPI"] = "96"
 # IF IS 4K MONITOR ENABLE 'os.environ["QT_SCALE_FACTOR"] = "2"'
 
@@ -39,14 +40,19 @@ class MainWindow(QMainWindow):
         self.populate_cboConnections()
         self.show()
 
+    def btnConnect_Click(self):
+        print("Connected")
+
+    def btnDisconnect_Click(self):
+        print("Disconnected")
+
     def populate_cboConnections(self):
         self.ui.cboConnections.addItem("") # one empty item
         for item in self.settings_vals["ssh_connections"]:
             self.ui.cboConnections.addItem(item["name"])
 
-    def btnSelectPrivateKey_Click(self):
-        filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select Private Key')
-        self.txtPrivateKey.setText(filename)
+    def tblConnections_itemChanged(self, item):
+        pass
         
     def btnDeleteSSH_Click(self):       
         button = QMessageBox.question(self, "Are you sure you?", "Are you sure you want to delete this connection?")
@@ -57,20 +63,23 @@ class MainWindow(QMainWindow):
                 if item != None:
                     del self.settings_vals["ssh_connections"][item.row()]
                     self.ui.load_pages.tblConnections.removeRow(item.row())
-                    self.loc_settings.serialize()
+            self.loc_settings.serialize()
 
-    def btnAddConnection_Click(self):
-        dlg = ui_dlgSSHConnection.Ui_dlgSSHConnection()
-        dlg.setupUi(dlg)
-        dlg.btnSSHPrivateKey.clicked.connect(self.btnSelectPrivateKey_Click)
-        dlg.exec()
-        nick = dlg.txtNickname.text()
-        host = dlg.txtSSHHost.text()
-        user = dlg.txtSSHUser.text()
-        pwd = dlg.txtSSHPassword.text()
-        key = dlg.PrivateKey
+    def btnSelectPrivateKey_Click(self):
+        filename, filter = QFileDialog.getOpenFileName(parent=self, caption='Select Private Key')
+        self.dlg.btnSSHPrivateKey.setText(filename)
+    def showConnectionDialog(self):
+        self.dlg = ui_dlgSSHConnection.Ui_dlgSSHConnection()
+        self.dlg.setupUi(self.dlg)
+        self.dlg.btnSSHPrivateKey.clicked.connect(self.btnSelectPrivateKey_Click)
+        self.dlg.exec()
+        nick = self.dlg.txtNickname.text()
+        host = self.dlg.txtSSHHost.text()
+        user = self.dlg.txtSSHUser.text()
+        pwd = self.dlg.txtSSHPassword.text()
+        key = self.dlg.btnSSHPrivateKey.text()
         if nick == "" or host == "" or user == "": return
-        self.settings_vals["ssh_connections"].append({"name":nick, "host":host, "username":user, "password":pwd})
+        self.settings_vals["ssh_connections"].append({"name":nick, "host":host, "username":user, "password":pwd, "key":key})
         self.loc_settings.serialize()
         while self.ui.load_pages.tblConnections.rowCount() > 0:
             self.ui.load_pages.tblConnections.removeRow(0)
@@ -83,9 +92,12 @@ class MainWindow(QMainWindow):
             key = None
             if len(str(con["key"])) > 0:
                 key = ntpath.basename(str(con["key"])) # private key file name
-            self.ui.load_pages.tblConnections.setItem(row_number, 3, QTableWidgetItem(str("key"))) 
+            self.ui.load_pages.tblConnections.setItem(row_number, 3, QTableWidgetItem(str(con["key"]))) 
             self.ui.load_pages.tblConnections.setRowHeight(row_number, 22)
         del dlg
+
+    def btnAddConnection_Click(self):
+        self.showConnectionDialog()
 
     def tblConnections_SelectionChanged(self):
         if len(self.ui.load_pages.tblConnections.selectedItems()) > 0:
@@ -97,28 +109,16 @@ class MainWindow(QMainWindow):
 
     def itemClick_evt(self,item):
         if item.text() == "Connections":
-            MainFunctions.set_page(self,self.ui.load_pages.page_Connections)
+            MainFunctions.set_page(self,self.ui.load_pages.pgTools)
         return item.text()
 
-    def SSHitemClick_evt(self,item):
-        if item.text() == 1:
-            self.ui.load_pages.txtSSHNickName.setPlainText(str(self.ui.load_pages.tblConnections.item(item.row(),0).text()))
-            self.ui.load_pages.txtSSHHostIP.setPlainText(str(self.ui.load_pages.tblConnections.item(item.row(),1).text()))
-            self.ui.load_pages.txtSSHUsername.setPlainText(str(self.ui.load_pages.tblConnections.item(item.row(),2).text()))
-        elif self == 2:
-            self.actHi = QAction(self)
-            self.actHi.setText("Hello")
-            self.mnu = QMenu(self)
-            self.mnu.addAction(self.actHi)
-
     def btn_clicked(self):
-        # GET BT CLICKED
         btn = SetupMainWindow.setup_btns(self)
         top_btn_settings = MainFunctions.get_title_bar_btn(self, "btn_top_settings")
         
         if btn.objectName() == "btn_home":
             self.ui.left_menu.select_only_one(btn.objectName())
-            MainFunctions.set_page(self,self.ui.load_pages.page_Connections)
+            MainFunctions.set_page(self,self.ui.load_pages.pgTools)
         if btn.objectName() == "btn_targets":
             self.ui.left_menu.select_only_one(btn.objectName())
             MainFunctions.set_page(self,self.ui.load_pages.page_Main)

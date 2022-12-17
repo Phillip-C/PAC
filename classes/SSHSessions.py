@@ -3,6 +3,10 @@ import os
 
 class SSHSessions:
     Sessions = {}
+
+    def Count(self):
+        return len(self.Sessions)
+        
     class SSH:        
         client = paramiko.SSHClient()
         sshKey = None
